@@ -1,0 +1,17 @@
+
+Project 03:
+Automated essay grading
+
+   -
+
+      The purpose of this project is to implement and train machine
+      learning algorithms to automatically assess and grade essay responses.
+      -
+
+      Dataset: Essays with human graded scores
+      https://www.kaggle.com/c/asap-aes/data
+
+
+Reference:
+http://cs229.stanford.edu/proj2014/Alex%20Adamson,%20Andrew%20Lamb,%20Ralph%20Ma,%20Automated%20Essay%20Grading.pdf
+
