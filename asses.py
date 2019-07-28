@@ -1,3 +1,4 @@
+import nltk
 
 import nltk.data
 import pandas as pd
@@ -8,11 +9,17 @@ import numpy as np
 import re
 from collections import Counter
 import nltk
-nltk.download('punkt')		
+nltk.download('punkt')	
+nltk.download('brown')	
 from nltk.tokenize import sent_tokenize
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+tf=TfidfVectorizer()
+text_tf= tf.fit_transform(data['Phrase'])
+
+
 asses=pd.read_csv('training_set.tsv',delimiter='\t',encoding='latin-1')
-dataset=asses[asses['essay_set']==1].iloc[:,[0,1,2,3,4,6]]
+dataset=asses[asses['essay_set']==1].iloc[:,[0,1,2,6]]
 """
 • Word n-grams - N-grams tokenize the next and treat it as a “bag of words”, where each feature is a count of
 how many times a word or combination of words appeared. We usually used unigrams. We applied the tf-idf
@@ -46,30 +53,44 @@ def line_count(p):
 	return NumberOfLines	
 
 def sentense_count(p):
-	tokenized_text=sent_tokenize(text)
+	tokenized_text=sent_tokenize(p)
 	return	len(tokenized_text)
 
-
-	
-print("no_char"," word_count","line_count")	
+def unique_word(p):
+	p=p.split()
+	q=[]
+	for i in p:
+		if i not in q:
+			q.append(i)
+	return len(q)	
+		
+		
+		
+		
+		
+		
+		
+print("no_char"," word_count","line_count","sentense count","unique_word")	
 for i in range(0,len(dataset)):
-		print(char_count(dataset.iloc[i,2])," ",word_count(dataset.iloc[i,2])," ",line_count(dataset.iloc[i,2]),sentense_count(dataset.iloc[i,2]))
+		print(i," ",char_count(dataset.iloc[i,2])," ",word_count(dataset.iloc[i,2]),"  ",line_count(dataset.iloc[i,2]),"  ",sentense_count(dataset.iloc[i,2]),"  ",unique_word(dataset.iloc[i,2]))
 		
 	
+from textblob import TextBlob
+
+text = '''
+The titular threat of The Blob has always struck me as the ultimate movie
+monster: an insatiably hungry, amoeba-like mass able to penetrate
+virtually any safeguard, capable of--as a doomed doctor chillingly
+describes it--"assimilating flesh on contact.
+Snide comparisons to gelatin be damned, it's a concept with the most
+devastating of potential consequences, not unlike the grey goo scenario
+proposed by technological theorists fearful of
+artificial intelligence run rampant.
+'''
+
+blob = TextBlob(text)
+blob.noun_phrases         
 
 
-from nltk.tokenize import word_tokenize
-text="""Hello Mr. Smith, how are you doing today? The weather is great, and city is awesome.
-The sky is pinkish-blue. You shouldn't eat cardboard"""
-tokenized_text=word_tokenize(text)
-print(tokenized_text)
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
