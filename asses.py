@@ -71,7 +71,7 @@ def unique_word(p):
 		
 print("no_char"," word_count","line_count","sentense count","unique_word")	
 for i in range(0,len(dataset)):
-		print(i," ",char_count(dataset.iloc[i,2])," ",word_count(dataset.iloc[i,2]),"  ",line_count(dataset.iloc[i,2]),"  ",sentense_count(dataset.iloc[i,2]),"  ",unique_word(dataset.iloc[i,2]))
+		print(char_count(dataset.iloc[i,2])," ",word_count(dataset.iloc[i,2]),"  ",line_count(dataset.iloc[i,2]),"  ",sentense_count(dataset.iloc[i,2]),"  ",unique_word(dataset.iloc[i,2]))
 		
 		
 		
