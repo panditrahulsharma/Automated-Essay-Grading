@@ -2,3 +2,4 @@
 
 #text blob library
 #https://textblob.readthedocs.io/en/dev/quickstart.html#spelling-correction
+#https://pypi.org/project/textblob/

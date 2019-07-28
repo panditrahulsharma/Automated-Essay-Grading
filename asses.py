@@ -1,21 +1,20 @@
-import nltk
-
 import nltk.data
 import pandas as pd
-# Import logging to log model building progress
-import logging as log
 import numpy as np
 # Importing packages required for Spell Checking
 import re
 from collections import Counter
 import nltk
+from nltk.stem.porter import PorterStemmer
+
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+
 nltk.download('punkt')	
 nltk.download('brown')	
+nltk.download('averaged_perceptron_tagger')
 from nltk.tokenize import sent_tokenize
-
-from sklearn.feature_extraction.text import TfidfVectorizer
-tf=TfidfVectorizer()
-text_tf= tf.fit_transform(data['Phrase'])
+	
 
 
 asses=pd.read_csv('training_set.tsv',delimiter='\t',encoding='latin-1')
@@ -74,23 +73,43 @@ print("no_char"," word_count","line_count","sentense count","unique_word")
 for i in range(0,len(dataset)):
 		print(i," ",char_count(dataset.iloc[i,2])," ",word_count(dataset.iloc[i,2]),"  ",line_count(dataset.iloc[i,2]),"  ",sentense_count(dataset.iloc[i,2]),"  ",unique_word(dataset.iloc[i,2]))
 		
-	
-from textblob import TextBlob
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-text = '''
-The titular threat of The Blob has always struck me as the ultimate movie
-monster: an insatiably hungry, amoeba-like mass able to penetrate
-virtually any safeguard, capable of--as a doomed doctor chillingly
-describes it--"assimilating flesh on contact.
-Snide comparisons to gelatin be damned, it's a concept with the most
-devastating of potential consequences, not unlike the grey goo scenario
-proposed by technological theorists fearful of
-artificial intelligence run rampant.
-'''
-
-blob = TextBlob(text)
-blob.noun_phrases         
 
 
-	
-	
+
+
+
+
+
