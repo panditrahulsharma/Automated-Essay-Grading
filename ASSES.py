@@ -34,45 +34,7 @@ asses=pd.read_csv("training_set.tsv",delimiter='\t',encoding='latin-1')
 dataset=asses[asses['essay_set']==1].iloc[:,[2,6]]
 
 # 1. Number of characters in an essay
-"""
-POS tag list:
 
-CC	coordinating conjunction
-CD	cardinal digit
-DT	determiner
-EX	existential there (like: "there is" ... think of it like "there exists")
-FW	foreign word
-IN	preposition/subordinating conjunction
-JJ	adjective	'big'
-JJR	adjective, comparative	'bigger'
-JJS	adjective, superlative	'biggest'
-LS	list marker	1)
-MD	modal	could, will
-NN	noun, singular 'desk'
-NNS	noun plural	'desks'
-NNP	proper noun, singular	'Harrison'
-NNPS	proper noun, plural	'Americans'
-PDT	predeterminer	'all the kids'
-POS	possessive ending	parent\'s
-PRP	personal pronoun	I, he, she
-PRP$	possessive pronoun	my, his, hers
-RB	adverb	very, silently,
-RBR	adverb, comparative	better
-RBS	adverb, superlative	best
-RP	particle	give up
-TO	to	go 'to' the store.
-UH	interjection	errrrrrrrm
-VB	verb, base form	take
-VBD	verb, past tense	took
-VBG	verb, gerund/present participle	taking
-VBN	verb, past participle	taken
-VBP	verb, sing. present, non-3d	take
-VBZ	verb, 3rd person sing. present	takes
-WDT	wh-determiner	which
-WP	wh-pronoun	who, what
-WP$	possessive wh-pronoun	whose
-WRB	wh-abverb	where, when
-"""
 def char_count1(p):
 	p=p.split()
 	total_char=0
@@ -191,11 +153,49 @@ def paragraph_len(p):
 # 9. Number of adjectives in an essay
 # 10. Number of verbs in an essay
 # 11. Number of adverbs in an essay
+"""
+POS tag list:
 
+CC	coordinating conjunction
+CD	cardinal digit
+DT	determiner
+EX	existential there (like: "there is" ... think of it like "there exists")
+FW	foreign word
+IN	preposition/subordinating conjunction
+JJ	adjective	'big'
+JJR	adjective, comparative	'bigger'
+JJS	adjective, superlative	'biggest'
+LS	list marker	1)
+MD	modal	could, will
+NN	noun, singular 'desk'
+NNS	noun plural	'desks'
+NNP	proper noun, singular	'Harrison'
+NNPS	proper noun, plural	'Americans'
+PDT	predeterminer	'all the kids'
+POS	possessive ending	parent\'s
+PRP	personal pronoun	I, he, she
+PRP$	possessive pronoun	my, his, hers
+RB	adverb	very, silently,
+RBR	adverb, comparative	better
+RBS	adverb, superlative	best
+RP	particle	give up
+TO	to	go 'to' the store.
+UH	interjection	errrrrrrrm
+VB	verb, base form	take
+VBD	verb, past tense	took
+VBG	verb, gerund/present participle	taking
+VBN	verb, past participle	taken
+VBP	verb, sing. present, non-3d	take
+VBZ	verb, 3rd person sing. present	takes
+WDT	wh-determiner	which
+WP	wh-pronoun	who, what
+WP$	possessive wh-pronoun	whose
+WRB	wh-abverb	where, when
+"""
 def count_pos(essay):
     
     tokenized_sentences = nltk.word_tokenize(essay)
-    
+    #convert paragraph into word
     noun_count = 0
     adj_count = 0
     verb_count = 0
@@ -203,7 +203,7 @@ def count_pos(essay):
     
     for sentence in tokenized_sentences:
         tagged_tokens = nltk.pos_tag(sentence)
-        
+        #token_touple convert into touple with word and their noun,adjective,verb ,adverd
         for token_tuple in tagged_tokens:
 							
             pos_tag = token_tuple[1]
