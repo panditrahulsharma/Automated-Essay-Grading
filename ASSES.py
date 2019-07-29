@@ -386,6 +386,10 @@ plt.legend()
 plt.show()
 
 
+#score of model
+print(ridge.score(featurs_train,labels_train))
+print(ridge.score(features_test,labels_test))
+
 
 
 
