@@ -244,7 +244,37 @@ X_cv = count_vectors.toarray()
 
 y_cv = dataset.iloc[:,1].as_matrix()
 
-X_train, X_test, y_train, y_test = train_test_split(X_cv, y_cv, test_size = 0.3,random_state=0)
+featurs_train, features_test, labels_train, labels_test = train_test_split(X_cv, y_cv, test_size = 0.3,random_state=0)
+
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR 
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import Ridge
+from sklearn import metrics
+
+#first takes linearregression
+lr=LinearRegression()
+lr.fit(featurs_train,labels_train)
+pred_LinearRegression=lr.predict(features_test)
+
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_LinearRegression}))
+print("MAE",metrics.mean_absolute_error(labels_test,pred_LinearRegression))
+print("MSE",metrics.mean_squared_error(labels_test,pred_LinearRegression))
+print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_LinearRegression)))
+print("rmse is less or equal of 10% of mean(labels)")
+print("labels mean=",np.mean(y_cv))
+
+import matplotlib.pyplot as plt
+x=list(range(0,len(labels_test)))
+plt.plot(x,labels_test,color='r',labels='actual marks')
+plt.plot(x,pred_LinearRegression,color='green',label='pred marks')
+plt.xlabel("no of assay")
+plt.ylabel("marks per assay")
+plt.show()
+
+
 
 
 
