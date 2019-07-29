@@ -222,18 +222,29 @@ print(count_pos(dataset.iloc[0,0]))
 
 
 
+# splitting data into train data and test data (70/30)
+
+
+def get_count_vectors(essays):
+    
+    vectorizer = CountVectorizer(max_features = 10000, ngram_range=(1, 3), stop_words='english')
+    
+    count_vectors = vectorizer.fit_transform(essays)
+    
+    feature_names = vectorizer.get_feature_names()
+    
+    return feature_names, count_vectors
 
 
 
 
+feature_names_cv, count_vectors = get_count_vectors(dataset.iloc[:,0])
 
+X_cv = count_vectors.toarray()
 
+y_cv = dataset.iloc[:,1].as_matrix()
 
-
-
-
-
-
+X_train, X_test, y_train, y_test = train_test_split(X_cv, y_cv, test_size = 0.3,random_state=0)
 
 
 
