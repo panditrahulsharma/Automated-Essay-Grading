@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 import re, collections
-
+import matplotlib.pyplot as plt
 from collections import defaultdict
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import mean_squared_error, r2_score
@@ -266,7 +266,7 @@ print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_LinearRegressio
 print("rmse is less or equal of 10% of mean(labels)")
 print("labels mean=",np.mean(y_cv))
 
-import matplotlib.pyplot as plt
+
 x=list(range(0,len(labels_test)))
 plt.plot(x,labels_test,color='r',label='actual marks')
 plt.plot(x,pred_LinearRegression,label='pred marks')
@@ -289,7 +289,55 @@ print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_RandomForestReg
 print("rmse is less or equal of 10% of mean(labels)")
 print("labels mean=",np.mean(y_cv))
 
+x=list(range(0,len(labels_test)))
+plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,pred_RandomForestRegressor,label='pred marks')
+plt.xlabel("no of assay")
+plt.ylabel("marks per assay")
+plt.legend()
+plt.show()
+
+#3.from sklearn.svm import SVR 
+svr=SVR(kernel='rbf',degree=3)
+svr.fit(featurs_train,labels_train)
+pred_svr=svr.predict(features_test)
 
 
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_svr}))
+print("MAE",metrics.mean_absolute_error(labels_test,pred_svr))
+print("MSE",metrics.mean_squared_error(labels_test,pred_svr))
+print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_svr)))
+print("rmse is less or equal of 10% of mean(labels)")
+print("labels mean=",np.mean(y_cv))
 
 
+plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,pred_svr,label='pred marks')
+plt.xlabel("no of assay")
+plt.ylabel("marks per assay")
+plt.legend()
+plt.show()
+
+#from sklearn.tree import DecisionTreeRegressor
+dt=DecisionTreeRegressor()
+dt.fit(featurs_train,labels_train)
+pred_dt=dt.predict(features_test)
+
+
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_dt}))
+print("MAE",metrics.mean_absolute_error(labels_test,pred_dt))
+print("MSE",metrics.mean_squared_error(labels_test,pred_dt))
+print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_dt)))
+print("rmse is less or equal of 10% of mean(labels)")
+print("labels mean=",np.mean(y_cv))
+
+
+plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,pred_dt,label='pred marks')
+plt.xlabel("no of assay")
+plt.ylabel("marks per assay")
+plt.legend()
+plt.show()
+
+
+#
