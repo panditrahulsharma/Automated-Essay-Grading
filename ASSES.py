@@ -246,6 +246,43 @@ y_cv = dataset.iloc[:,1].as_matrix()
 
 featurs_train, features_test, labels_train, labels_test = train_test_split(X_cv, y_cv, test_size = 0.3,random_state=0)
 
+# extracting essay features
+
+def extract_features(data):
+    
+    features = data.copy()
+    
+    features['char_count'] = features['essay'].apply(char_count)
+    
+    features['word_count'] = features['essay'].apply(word_count)
+    
+    features['sent_count'] = features['essay'].apply(sent_count)
+    
+    features['avg_word_len'] = features['essay'].apply(avg_word_len)
+    
+    features['lemma_count'] = features['essay'].apply(count_lemmas)
+    
+    features['spell_err_count'] = features['essay'].apply(count_spell_error)
+    
+    features['noun_count'], features['adj_count'], features['verb_count'], features['adv_count'] = zip(*features['essay'].map(count_pos))
+    
+    return features
+
+
+
+features_set1= extract_features(dataset)
+
+print(features_set1)
+
+y = np.array(dataset['domain1_score'])
+
+X = np.concatenate((dataset.iloc[:, 2:].as_matrix(), X_cv), axis = 1)
+
+
+
+from sklearn.model_selection import train_test_split
+featurs_train1,features_test1,labels_train1,labels_test1=train_test_split(X,y,random_state=0,test_size=0.3)
+
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR 
@@ -256,10 +293,10 @@ from sklearn import metrics
 
 #first takes linearregression
 lr=LinearRegression()
-lr.fit(featurs_train,labels_train)
-pred_LinearRegression=lr.predict(features_test)
+lr.fit(featurs_train1,labels_train1)
+pred_LinearRegression=lr.predict(features_test1)
 
-print(pd.DataFrame({'actual':labels_test,'prediction':pred_LinearRegression}))
+print(pd.DataFrame({'actual':labels_test1,'prediction':pred_LinearRegression}))
 print("MAE",metrics.mean_absolute_error(labels_test,pred_LinearRegression))
 print("MSE",metrics.mean_squared_error(labels_test,pred_LinearRegression))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_LinearRegression)))
@@ -268,7 +305,7 @@ print("labels mean=",np.mean(y_cv))
 
 
 x=list(range(0,len(labels_test)))
-plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,labels_test1,color='r',label='actual marks')
 plt.plot(x,pred_LinearRegression,label='pred marks')
 plt.xlabel("no of assay")
 plt.ylabel("marks per assay")
@@ -278,8 +315,8 @@ plt.show()
 
 #2.random forest
 rf=RandomForestRegressor(n_estimators=5,random_state=0)
-rf.fit(featurs_train,labels_train)
-pred_RandomForestRegressor=rf.predict(features_test)
+rf.fit(featurs_train1,labels_train1)
+pred_RandomForestRegressor=rf.predict(features_test1)
 
 
 print(pd.DataFrame({'actual':labels_test,'prediction':pred_RandomForestRegressor}))
@@ -389,7 +426,6 @@ plt.show()
 #score of model
 print(ridge.score(featurs_train,labels_train))
 print(ridge.score(features_test,labels_test))
-
 
 
 
