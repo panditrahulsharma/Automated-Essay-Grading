@@ -340,4 +340,53 @@ plt.legend()
 plt.show()
 
 
-#
+#ridge and lasso
+ridge=Ridge()
+lasso=Lasso()
+ridge.fit(featurs_train,labels_train)
+pred_ridge=ridge.predict(features_test)
+
+
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_ridge}))
+print("MAE",metrics.mean_absolute_error(labels_test,pred_ridge))
+print("MSE",metrics.mean_squared_error(labels_test,pred_ridge))
+print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_ridge)))
+print("rmse is less or equal of 10% of mean(labels)")
+print("labels mean=",np.mean(y_cv))
+
+
+plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,pred_ridge,label='pred marks')
+plt.xlabel("no of assay")
+plt.ylabel("marks per assay")
+plt.legend()
+plt.show()
+
+
+
+#Ridge
+ridge=Ridge()
+ridge.fit(featurs_train,labels_train)
+pred_Ridge=ridge.predict(features_test)
+
+
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_Ridge}))
+print("MAE",metrics.mean_absolute_error(labels_test,pred_Ridge))
+print("MSE",metrics.mean_squared_error(labels_test,pred_Ridge))
+print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_Ridge)))
+print("rmse is less or equal of 10% of mean(labels)")
+print("labels mean=",np.mean(y_cv))
+
+
+plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,pred_Ridge,label='pred marks')
+plt.xlabel("no of assay")
+plt.ylabel("marks per assay")
+plt.legend()
+plt.show()
+
+
+
+
+
+
