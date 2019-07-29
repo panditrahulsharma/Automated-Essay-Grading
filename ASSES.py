@@ -268,12 +268,26 @@ print("labels mean=",np.mean(y_cv))
 
 import matplotlib.pyplot as plt
 x=list(range(0,len(labels_test)))
-plt.plot(x,labels_test,color='r',labels='actual marks')
-plt.plot(x,pred_LinearRegression,color='green',label='pred marks')
+plt.plot(x,labels_test,color='r',label='actual marks')
+plt.plot(x,pred_LinearRegression,label='pred marks')
 plt.xlabel("no of assay")
 plt.ylabel("marks per assay")
+plt.legend()
 plt.show()
 
+
+#2.random forest
+rf=RandomForestRegressor(n_estimators=5,random_state=0)
+rf.fit(featurs_train,labels_train)
+pred_RandomForestRegressor=rf.predict(features_test)
+
+
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_RandomForestRegressor}))
+print("MAE",metrics.mean_absolute_error(labels_test,pred_RandomForestRegressor))
+print("MSE",metrics.mean_squared_error(labels_test,pred_RandomForestRegressor))
+print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_RandomForestRegressor)))
+print("rmse is less or equal of 10% of mean(labels)")
+print("labels mean=",np.mean(y_cv))
 
 
 
