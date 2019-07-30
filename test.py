@@ -1,11 +1,33 @@
 #load pickle file
+
 import pickle
 import pandas as pd
+import nltk
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+import re, collections
+import matplotlib.pyplot as plt
+from collections import defaultdict
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.svm import SVR
+from sklearn import ensemble
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import cohen_kappa_score
+from extract import extract_features
+from nltk.stem.porter import PorterStemmer
+
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+
 scale_pkl=open('scale.pkl','rb')
 sc= pickle.load(scale_pkl)
 
-scale_pkl1=open('extract_features.pkl','rb')
-extract_features = pickle.load(scale_pkl1)
 
 scale_pkl2=open('vectorizer.pkl','rb')
 vectorizer= pickle.load(scale_pkl2)
@@ -27,6 +49,8 @@ dt= pickle.load(scale_pkl6)
 scale_pkl7=open('Ridge.pkl','rb')
 ridge= pickle.load(scale_pkl7)
 
+asses=pd.read_csv("training_set.tsv",delimiter='\t',encoding='latin-1')
+dataset=asses[asses['essay_set']==1].iloc[:,[2,6]]
 
 #this is string come to the gui
 test_data=pd.Series(dataset.iloc[1,0])
@@ -35,7 +59,7 @@ test_dataframe=pd.DataFrame(test_data,columns=['essay'])
 
 
 
-test_dataframe1= extract_feature(test_dataframe)
+test_dataframe1= extract_features(test_dataframe)
 #method call using pickle file
 test_dataframe1=test_dataframe1.iloc[:,1:]
 
@@ -73,7 +97,7 @@ features1= np.concatenate((np.array(test_dataframe1), X_cv1), axis = 1)
 
 pred=regression.predict(features1)
 
-
+print(pred)
 
 
 

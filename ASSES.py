@@ -520,7 +520,7 @@ model_pkl.close()
 
 
 
-filename = 'extract_feature.pkl'
+filename = 'extract_features.pkl'
 model_pkl1 = open(filename, 'wb')
 pickle.dump(extract_features, model_pkl1)
 model_pkl1.close()
