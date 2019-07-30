@@ -44,7 +44,7 @@ from sklearn.metrics import cohen_kappa_score
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 asses=pd.read_csv("training_set.tsv",delimiter='\t',encoding='latin-1')
-dataset=asses[asses['essay_set']==1].iloc[:,[2,6]]
+dataset=asses[asses['essay_set']==1].iloc[0:5,[2,6]]
 
 # 1. Number of characters in an essay
 
@@ -231,7 +231,6 @@ def count_pos(essay):
             
     return noun_count, adj_count, verb_count, adv_count
    
-print(count_pos(dataset.iloc[0,0]))
 
 
 
@@ -278,7 +277,19 @@ dataset['clean_essay']=pd.DataFrame(essay_set)
 
 
 # splitting data into train data and test data (70/30)
-
+"""
+dataset.info()
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 5 entries, 0 to 4
+Data columns (total 3 columns):
+essay            5 non-null object
+domain1_score    5 non-null int64
+clean_essay      5 non-null object
+dtypes: int64(1), object(2)
+memory usage: 320.0+ bytes
+dataset.iloc[:,2]
+ means clean data perform the vectorization
+"""
 vectorizer = CountVectorizer(max_features = 10000, ngram_range=(1, 3), stop_words='english')
     
 count_vectors = vectorizer.fit_transform(dataset.iloc[:,2])
@@ -286,7 +297,27 @@ count_vectors = vectorizer.fit_transform(dataset.iloc[:,2])
 X_cv = count_vectors.toarray()
 
 #X_cv is aonly bog model features
-
+"""
+features_set1.info()
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 5 entries, 0 to 4
+Data columns (total 12 columns):
+essay              5 non-null object
+domain1_score      5 non-null int64
+clean_essay        5 non-null object
+features_set1=features_set1.iloc[:,3:]
+char_count         5 non-null int64
+word_count         5 non-null int64
+sent_count         5 non-null int64
+avg_word_len       5 non-null float64
+spell_err_count    5 non-null int64
+noun_count         5 non-null int64
+adj_count          5 non-null int64
+verb_count         5 non-null int64
+adv_count          5 non-null int64
+dtypes: float64(1), int64(9), object(2)
+memory usage: 520.0+ bytes
+"""
 # extracting essay features
 
 def extract_features(data):
@@ -312,6 +343,7 @@ def extract_features(data):
 
 
 features_set1= extract_features(dataset)
+#features_set1 contains only features_extract data because
 features_set1=features_set1.iloc[:,3:]
 
 #now perform standerd scalling of features extracting data
@@ -475,19 +507,6 @@ plt.show()
 print(ridge.score(featurs_train,labels_train))
 print(ridge.score(features_test,labels_test))
 
-
-
-#this code makes pickle file
-import pickle
-filename = 'scalling.pkl'
-model_pkl = open(filename, 'wb')
-pickle.dump(sc,model_pkl)
-model_pkl.close()
-
-#load pickle file
-import pickle
-digit_detect_pkl=open('scalling.pkl','rb')
-sc = pickle.load(digit_detect_pkl)
 
 
 
