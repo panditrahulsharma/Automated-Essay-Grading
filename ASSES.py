@@ -1,3 +1,4 @@
+"""
 # For this project, only essay set 1 was used for analysis and model creation.
 
 # Features:
@@ -12,6 +13,17 @@
 # 9. Number of adjectives in an essay
 # 10. Number of verbs in an essay
 # 11. Number of adverbs in an essay
+#12.create a bow model
+#13.vectirzation with 10,000 bow features
+#14 features extraction
+#15. Satndered scalling of features scalling model
+#16. add bow and features_extraction 
+#17. apply train_test_split 
+# use 
+ LinearRegression, RandomForestRegressor,SVR ,DecisionTreeRegressor
+Lasso,Ridge
+"""
+
 import nltk
 import pandas as pd
 import numpy as np
@@ -273,7 +285,6 @@ count_vectors = vectorizer.fit_transform(dataset.iloc[:,2])
    
 X_cv = count_vectors.toarray()
 
-labels = np.array(dataset.iloc[:,1])
 #X_cv is aonly bog model features
 
 # extracting essay features
@@ -286,7 +297,7 @@ def extract_features(data):
     
     features['word_count'] = features['essay'].apply(word_count)
     
-    features['sent_count'] = features['essay'].apply(sent_count)
+    features['sent_count'] = features['essay'].apply(sentense_count)
     
     features['avg_word_len'] = features['essay'].apply(avg_word_len)
     
@@ -301,17 +312,24 @@ def extract_features(data):
 
 
 features_set1= extract_features(dataset)
+features_set1=features_set1.iloc[:,3:]
 
-print(features_set1)
+#now perform standerd scalling of features extracting data
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+features_set1=sc.fit_transform(features_set1)
 
-y = np.array(dataset['domain1_score'])
 
-X = np.concatenate((dataset.iloc[:, 2:].as_matrix(), X_cv), axis = 1)
 
+
+#the bow(bag of word data contains 10000) rows and features_set1 contains 9 columns
+#so we add column (bom+features_extraction) using np array with axis=1
+features = np.concatenate((np.array(features_set1), X_cv), axis = 1)
+labels = np.array(dataset.iloc[:,1])
 
 
 from sklearn.model_selection import train_test_split
-featurs_train1,features_test1,labels_train1,labels_test1=train_test_split(X,y,random_state=0,test_size=0.3)
+featurs_train,features_test,labels_train,labels_test=train_test_split(features,labels,random_state=0,test_size=0.3)
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
@@ -323,10 +341,10 @@ from sklearn import metrics
 
 #first takes linearregression
 lr=LinearRegression()
-lr.fit(featurs_train1,labels_train1)
-pred_LinearRegression=lr.predict(features_test1)
+lr.fit(featurs_train,labels_train)
+pred_LinearRegression=lr.predict(features_test)
 
-print(pd.DataFrame({'actual':labels_test1,'prediction':pred_LinearRegression}))
+print(pd.DataFrame({'actual':labels_test,'prediction':pred_LinearRegression}))
 print("MAE",metrics.mean_absolute_error(labels_test,pred_LinearRegression))
 print("MSE",metrics.mean_squared_error(labels_test,pred_LinearRegression))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_LinearRegression)))
@@ -335,7 +353,7 @@ print("labels mean=",np.mean(y_cv))
 
 
 x=list(range(0,len(labels_test)))
-plt.plot(x,labels_test1,color='r',label='actual marks')
+plt.plot(x,labels_test,color='r',label='actual marks')
 plt.plot(x,pred_LinearRegression,label='pred marks')
 plt.xlabel("no of assay")
 plt.ylabel("marks per assay")
@@ -344,9 +362,9 @@ plt.show()
 
 
 #2.random forest
-rf=RandomForestRegressor(n_estimators=5,random_state=0)
-rf.fit(featurs_train1,labels_train1)
-pred_RandomForestRegressor=rf.predict(features_test1)
+rf=RandomForestRegressor(n_estimators=10,random_state=0)
+rf.fit(featurs_train,labels_train)
+pred_RandomForestRegressor=rf.predict(features_test)
 
 
 print(pd.DataFrame({'actual':labels_test,'prediction':pred_RandomForestRegressor}))
@@ -456,6 +474,27 @@ plt.show()
 #score of model
 print(ridge.score(featurs_train,labels_train))
 print(ridge.score(features_test,labels_test))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
