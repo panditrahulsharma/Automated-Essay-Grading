@@ -350,8 +350,7 @@ features_set1=features_set1.iloc[:,3:]
 from sklearn.preprocessing import StandardScaler
 sc=StandardScaler()
 features_set1=sc.fit_transform(features_set1)
-
-
+#transform
 
 
 #the bow(bag of word data contains 10000) rows and features_set1 contains 9 columns
@@ -381,7 +380,7 @@ print("MAE",metrics.mean_absolute_error(labels_test,pred_LinearRegression))
 print("MSE",metrics.mean_squared_error(labels_test,pred_LinearRegression))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_LinearRegression)))
 print("rmse is less or equal of 10% of mean(labels)")
-print("labels mean=",np.mean(y_cv))
+print("labels mean=",np.mean(labels))
 
 
 x=list(range(0,len(labels_test)))
@@ -509,20 +508,36 @@ print(ridge.score(features_test,labels_test))
 
 
 
+#this code makes pickle file
+import pickle
+filename = 'scale.pkl'
+model_pkl = open(filename, 'wb')
+pickle.dump(model, model_pkl)
+#here st is a object     dt=DesigntreeRegressor()
+# Close the pickle instances
+model_pkl.close()
 
 
 
 
+filename = 'extract_feature.pkl'
+model_pkl1 = open(filename, 'wb')
+pickle.dump(extract_features, model_pkl1)
+model_pkl1.close()
+
+
+filename = 'vectorizer.pkl'
+model_pkl2 = open(filename, 'wb')
+pickle.dump(vectorizer, model_pkl2)
+model_pkl2.close()
 
 
 
 
-
-
-
-
-
-
+filename = 'regression.pkl'
+model_pkl3 = open(filename, 'wb')
+pickle.dump(lr, model_pkl3)
+model_pkl3.close()
 
 
 
