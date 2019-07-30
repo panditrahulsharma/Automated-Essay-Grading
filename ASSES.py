@@ -44,7 +44,7 @@ from sklearn.metrics import cohen_kappa_score
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 asses=pd.read_csv("training_set.tsv",delimiter='\t',encoding='latin-1')
-dataset=asses[asses['essay_set']==1].iloc[0:5,[2,6]]
+dataset=asses[asses['essay_set']==1].iloc[:,[2,6]]
 
 # 1. Number of characters in an essay
 
@@ -403,7 +403,7 @@ print("MAE",metrics.mean_absolute_error(labels_test,pred_RandomForestRegressor))
 print("MSE",metrics.mean_squared_error(labels_test,pred_RandomForestRegressor))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_RandomForestRegressor)))
 print("rmse is less or equal of 10% of mean(labels)")
-print("labels mean=",np.mean(y_cv))
+print("labels mean=",np.mean(labels))
 
 x=list(range(0,len(labels_test)))
 plt.plot(x,labels_test,color='r',label='actual marks')
@@ -424,7 +424,7 @@ print("MAE",metrics.mean_absolute_error(labels_test,pred_svr))
 print("MSE",metrics.mean_squared_error(labels_test,pred_svr))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_svr)))
 print("rmse is less or equal of 10% of mean(labels)")
-print("labels mean=",np.mean(y_cv))
+print("labels mean=",np.mean(labels))
 
 
 plt.plot(x,labels_test,color='r',label='actual marks')
@@ -445,7 +445,7 @@ print("MAE",metrics.mean_absolute_error(labels_test,pred_dt))
 print("MSE",metrics.mean_squared_error(labels_test,pred_dt))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_dt)))
 print("rmse is less or equal of 10% of mean(labels)")
-print("labels mean=",np.mean(y_cv))
+print("labels mean=",np.mean(labels))
 
 
 plt.plot(x,labels_test,color='r',label='actual marks')
@@ -468,7 +468,7 @@ print("MAE",metrics.mean_absolute_error(labels_test,pred_ridge))
 print("MSE",metrics.mean_squared_error(labels_test,pred_ridge))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_ridge)))
 print("rmse is less or equal of 10% of mean(labels)")
-print("labels mean=",np.mean(y_cv))
+print("labels mean=",np.mean(labels))
 
 
 plt.plot(x,labels_test,color='r',label='actual marks')
@@ -491,7 +491,7 @@ print("MAE",metrics.mean_absolute_error(labels_test,pred_Ridge))
 print("MSE",metrics.mean_squared_error(labels_test,pred_Ridge))
 print("RMSE",np.sqrt(metrics.mean_squared_error(labels_test,pred_Ridge)))
 print("rmse is less or equal of 10% of mean(labels)")
-print("labels mean=",np.mean(y_cv))
+print("labels mean=",np.mean(labels))
 
 
 plt.plot(x,labels_test,color='r',label='actual marks')
@@ -512,7 +512,7 @@ print(ridge.score(features_test,labels_test))
 import pickle
 filename = 'scale.pkl'
 model_pkl = open(filename, 'wb')
-pickle.dump(model, model_pkl)
+pickle.dump(sc, model_pkl)
 #here st is a object     dt=DesigntreeRegressor()
 # Close the pickle instances
 model_pkl.close()
@@ -539,6 +539,28 @@ model_pkl3 = open(filename, 'wb')
 pickle.dump(lr, model_pkl3)
 model_pkl3.close()
 
+
+filename = 'Random_forest.pkl'
+model_pkl4 = open(filename, 'wb')
+pickle.dump(rf, model_pkl4)
+model_pkl4.close()
+
+
+filename = 'SVR.pkl'
+model_pkl5 = open(filename, 'wb')
+pickle.dump(svr, model_pkl5)
+model_pkl5.close()
+
+
+filename = 'Decision_tree.pkl'
+model_pkl6 = open(filename, 'wb')
+pickle.dump(dt, model_pkl6)
+model_pkl6.close()
+
+filename = 'Ridge.pkl'
+model_pkl7 = open(filename, 'wb')
+pickle.dump(ridge, model_pkl7)
+model_pkl7.close()
 
 
 

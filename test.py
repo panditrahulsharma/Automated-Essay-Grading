@@ -1,10 +1,11 @@
 #load pickle file
 import pickle
-scale_pkl=open('scalling.pkl','rb')
+import pandas as pd
+scale_pkl=open('scale.pkl','rb')
 sc= pickle.load(scale_pkl)
 
-scale_pkl1=open('extract_feature.pkl','rb')
-extract_feature = pickle.load(scale_pkl1)
+scale_pkl1=open('extract_features.pkl','rb')
+extract_features = pickle.load(scale_pkl1)
 
 scale_pkl2=open('vectorizer.pkl','rb')
 vectorizer= pickle.load(scale_pkl2)
@@ -12,6 +13,19 @@ vectorizer= pickle.load(scale_pkl2)
 scale_pkl3=open('regression.pkl','rb')
 regression= pickle.load(scale_pkl3)
 
+
+scale_pkl4=open('Random_forest.pkl','rb')
+rf= pickle.load(scale_pkl4)
+
+
+scale_pkl5=open('SVR.pkl','rb')
+svr= pickle.load(scale_pkl5)
+
+scale_pkl6=open('Decision_tree.pkl','rb')
+dt= pickle.load(scale_pkl6)
+
+scale_pkl7=open('Ridge.pkl','rb')
+ridge= pickle.load(scale_pkl7)
 
 
 #this is string come to the gui
