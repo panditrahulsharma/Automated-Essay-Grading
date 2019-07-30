@@ -29,7 +29,8 @@ from sklearn.svm import SVR
 from sklearn import ensemble
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import cohen_kappa_score
-
+nltk.download('stopwords')
+from nltk.corpus import stopwords
 asses=pd.read_csv("training_set.tsv",delimiter='\t',encoding='latin-1')
 dataset=asses[asses['essay_set']==1].iloc[:,[2,6]]
 
@@ -222,29 +223,57 @@ print(count_pos(dataset.iloc[0,0]))
 
 
 
+
+
+#Stemming:  Stemming is a rudimentary rule-based process 
+# of stripping the suffixes (“ing”, “ly”, “es”, “s” etc) from a word.
+"""
+The most common lexicon normalization practices are :
+
+Stemming:  Stemming is a rudimentary rule-based process of stripping the 
+suffixes (“ing”, “ly”, “es”, “s” etc) from a word.
+
+Lemmatization: Lemmatization, on the other hand, is an 
+organized 
+& step by step procedure of obtaining the root form of 
+the word, 
+it makes use of vocabulary (dictionary importance of words) 
+and 
+morphological analysis (word structure and grammar relations).
+"""
+from nltk.stem.porter import PorterStemmer
+
+for i in rnage(0,len(dataset)):
+	essay=re.sub('[^a-zA-Z]', ' ',dataset['essay'][i])
+	essay=essay.lower()
+	essay=essay.split()
+	#stop word i am ..
+	essay = [word for word in essay if not word in set(stopwords.words('english'))]
+	ps = PorterStemmer()
+	#port stemmer convert word into root word
+	essay = [ps.stem(word) for word in essay]
+
+
+
+
+
+
+
+
+
+
+
+
 # splitting data into train data and test data (70/30)
 
-
-def get_count_vectors(essays):
+vectorizer = CountVectorizer(max_features = 10000, ngram_range=(1, 3), stop_words='english')
     
-    vectorizer = CountVectorizer(max_features = 10000, ngram_range=(1, 3), stop_words='english')
-    
-    count_vectors = vectorizer.fit_transform(essays)
-    
-    feature_names = vectorizer.get_feature_names()
-    
-    return feature_names, count_vectors
-
-
-
-
-feature_names_cv, count_vectors = get_count_vectors(dataset.iloc[:,0])
-
+count_vectors = vectorizer.fit_transform(dataset.iloc[:,0])
+   
 X_cv = count_vectors.toarray()
 
-y_cv = dataset.iloc[:,1].as_matrix()
+y_cv = np.array(dataset.iloc[:,1])
 
-featurs_train, features_test, labels_train, labels_test = train_test_split(X_cv, y_cv, test_size = 0.3,random_state=0)
 
 # extracting essay features
 
