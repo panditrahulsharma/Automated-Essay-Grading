@@ -477,6 +477,19 @@ print(ridge.score(features_test,labels_test))
 
 
 
+#this code makes pickle file
+import pickle
+filename = 'scalling.pkl'
+model_pkl = open(filename, 'wb')
+pickle.dump(sc,model_pkl)
+model_pkl.close()
+
+#load pickle file
+import pickle
+digit_detect_pkl=open('scalling.pkl','rb')
+sc = pickle.load(digit_detect_pkl)
+
+
 
 
 
