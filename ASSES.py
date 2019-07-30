@@ -36,7 +36,7 @@ dataset=asses[asses['essay_set']==1].iloc[:,[2,6]]
 
 # 1. Number of characters in an essay
 
-def char_count1(p):
+def char_count(p):
 	p=p.split()
 	total_char=0
 	for i in p:
@@ -241,9 +241,10 @@ it makes use of vocabulary (dictionary importance of words)
 and 
 morphological analysis (word structure and grammar relations).
 """
-from nltk.stem.porter import PorterStemmer
+essay_set=[]
 
-for i in rnage(0,len(dataset)):
+from nltk.stem.porter import PorterStemmer
+for i in range(0,len(dataset)):
 	essay=re.sub('[^a-zA-Z]', ' ',dataset['essay'][i])
 	essay=essay.lower()
 	essay=essay.split()
@@ -252,10 +253,10 @@ for i in rnage(0,len(dataset)):
 	ps = PorterStemmer()
 	#port stemmer convert word into root word
 	essay = [ps.stem(word) for word in essay]
+	essay=' '.join(essay)
+	essay_set.append(essay)
 
-
-
-
+dataset['clean_essay']=pd.DataFrame(essay_set)
 
 
 
@@ -268,12 +269,12 @@ for i in rnage(0,len(dataset)):
 
 vectorizer = CountVectorizer(max_features = 10000, ngram_range=(1, 3), stop_words='english')
     
-count_vectors = vectorizer.fit_transform(dataset.iloc[:,0])
+count_vectors = vectorizer.fit_transform(dataset.iloc[:,2])
    
 X_cv = count_vectors.toarray()
 
-y_cv = np.array(dataset.iloc[:,1])
-
+labels = np.array(dataset.iloc[:,1])
+#X_cv is aonly bog model features
 
 # extracting essay features
 
@@ -289,7 +290,7 @@ def extract_features(data):
     
     features['avg_word_len'] = features['essay'].apply(avg_word_len)
     
-    features['lemma_count'] = features['essay'].apply(count_lemmas)
+    #features['lemma_count'] = features['essay'].apply(count_lemmas)
     
     features['spell_err_count'] = features['essay'].apply(count_spell_error)
     
