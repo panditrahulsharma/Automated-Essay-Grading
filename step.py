@@ -28,8 +28,34 @@ Lasso,Ridge
 step-1 
 
 first extract features using extarct.py files import it 
-and pass dataframe in function it automatcally extract features
+and pass dataframe in function it automatcally extract features and pass it into standerd scalling
 
 step-2
 
-when we extract features than after 
+when we extract features than remove stop word and lemitization from essay
+
+next process CountVectorizer of clean essay
+
+->vectorizer = CountVectorizer(max_features = 10000, ngram_range=(1, 3), stop_words='english')
+    
+->count_vectors = vectorizer.fit_transform(dataset.iloc[:,2])
+   
+X_cv = count_vectors.toarray()
+
+step-3 
+
+X_cv contains only bog features and now add extract features in X_cv
+
+total features=X_cv+extract_features
+
+#the bow(bag of word data contains 10000) rows and features_set1 contains 9 columns
+#so we add column (bom+features_extraction) using np array with axis=1
+->features = np.concatenate((np.array(features_set1), X_cv), axis = 1)
+->labels = np.array(dataset.iloc[:,1])
+
+step-4
+now its times train_test_split and fit into model 
+
+i am use diff of linear model but i think in my own assumptions the linear_resgression model work better among these algo
+
+i have make all model pickle file and load into server.py
