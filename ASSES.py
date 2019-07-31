@@ -519,13 +519,6 @@ model_pkl.close()
 
 
 
-
-filename = 'extract_features.pkl'
-model_pkl1 = open(filename, 'wb')
-pickle.dump(extract_features, model_pkl1)
-model_pkl1.close()
-
-
 filename = 'vectorizer.pkl'
 model_pkl2 = open(filename, 'wb')
 pickle.dump(vectorizer, model_pkl2)

@@ -97,7 +97,6 @@ features1= np.concatenate((np.array(test_dataframe1), X_cv1), axis = 1)
 
 pred=regression.predict(features1)
 
-print(pred)
 
 
 

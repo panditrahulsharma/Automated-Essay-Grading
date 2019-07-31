@@ -49,6 +49,9 @@ dt= pickle.load(scale_pkl6)
 scale_pkl7=open('Ridge.pkl','rb')
 ridge= pickle.load(scale_pkl7)
 
+scale_pkl8=open('Lasso.pkl','rb')
+lasso= pickle.load(scale_pkl8)
+
 app = Flask(__name__)
 
 @app.route("/index.html")
@@ -81,7 +84,7 @@ def output():
     features1= np.concatenate((np.array(test_dataframe1), X_cv1), axis = 1)
     pred=regression.predict(features1)
 
-    return render_template("index.html",status=pred)
+    return render_template("index.html",status=pred[0])
 
 if __name__ == "__main__":
     app.run(debug=True)
