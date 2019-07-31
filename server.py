@@ -52,6 +52,12 @@ ridge= pickle.load(scale_pkl7)
 scale_pkl8=open('Lasso.pkl','rb')
 lasso= pickle.load(scale_pkl8)
 
+scale_pkl9=open('rmse_regression.pkl','rb')
+rms= pickle.load(scale_pkl9)
+
+scale_pkl10=open('kappa_regression.pkl','rb')
+kappa= pickle.load(scale_pkl10)
+
 app = Flask(__name__)
 
 @app.route("/index.html")
@@ -83,8 +89,8 @@ def output():
     X_cv1 = count_vector1.toarray()
     features1= np.concatenate((np.array(test_dataframe1), X_cv1), axis = 1)
     pred=regression.predict(features1)
-
-    return render_template("index.html",status=pred[0])
+    status = {"rmse":rms, "kappa":kappa, "pred":pred[0]}
+    return render_template("index.html",status=status)
 
 if __name__ == "__main__":
     app.run(debug=True)

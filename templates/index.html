@@ -49,22 +49,22 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="form_name">MAE *</label>
-                        <input id="form_name" type="text" name="mean" class="form-control" placeholder="mean absolute error*" required="required" data-error="name is required.">
+                        <label for="form_name">RMAE *</label>
+                        <input id="form_name" type="text" name="mean" class="form-control" placeholder="mean absolute error*" required="required" data-error="name is required." value="{{ status['rmse'] }}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="form_email">RMSE *</label>
-                        <input id="form_email" type="email" name="email" class="form-control" placeholder="root mean squard error*" required="required" data-error="Valid email is required.">
+                        <label for="form_email">Kappa Score *</label>
+                        <input id="form_email" type="email" name="email" class="form-control" placeholder="root mean squard error*" required="required" data-error="Valid email is required." value="{{ status['kappa'] }}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="form_phone">Essay Score</label>
-                        <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Essay prediction score" value="{{ status }}">
+                        <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Essay prediction score" value="{{ status['pred'] }}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
