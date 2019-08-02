@@ -89,8 +89,8 @@ def output():
     X_cv1 = count_vector1.toarray()
     features1= np.concatenate((np.array(test_dataframe1), X_cv1), axis = 1)
     pred=regression.predict(features1)
-    status = {"rmse":rms, "kappa":kappa, "pred":pred[0]}
-    return render_template("index.html",status=status)
+    #status = {"rmse":rms, "kappa":kappa, "pred":pred[0]}
+    return render_template("index.html",rms=rms,kappa=kappa,pred=pred[0])
 
 if __name__ == "__main__":
     app.run(debug=True)

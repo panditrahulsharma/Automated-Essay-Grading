@@ -50,21 +50,21 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="form_name">RMAE *</label>
-                        <input id="form_name" type="text" name="mean" class="form-control" placeholder="mean absolute error*" required="required" data-error="name is required." value="{{ status['rmse'] }}">
+                        <input id="form_name" type="text" name="mean" class="form-control" placeholder="mean absolute error*" required="required" data-error="name is required." value="{{ rms }}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="form_email">Kappa Score *</label>
-                        <input id="form_email" type="email" name="email" class="form-control" placeholder="root mean squard error*" required="required" data-error="Valid email is required." value="{{ status['kappa'] }}">
+                        <input id="form_email" type="email" name="email" class="form-control" placeholder="root mean squard error*" required="required" data-error="Valid email is required." value="{{ kappa}}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="form_phone">Essay Score</label>
-                        <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Essay prediction score" value="{{ status['pred'] }}">
+                        <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Essay prediction score" value="{{ pred}}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
